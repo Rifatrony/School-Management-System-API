@@ -1,8 +1,8 @@
 const express = require("express");
 
 const router = express.Router();
-const {AddStudent, ViewStudent, payStudentFee, showEachStudentFee, EnrollIntoNewClass, StudentDetails} = require("../../controller/student/student_controller");
-const checkLogin = require("../../middlewear/auth_middlewear");
+const {AddStudent, ViewStudent, payStudentFee, showEachStudentFee, EnrollIntoNewClass, StudentDetails} = require("../../../controller/admin/student/student_controller");
+const checkLogin = require("../../../middlewear/auth_middlewear");
 
 router.post('/add/:class_id',checkLogin, AddStudent);
 router.get('/details/:student_id', checkLogin, StudentDetails);
@@ -14,3 +14,4 @@ router.put('/enroll/:student_id', checkLogin, EnrollIntoNewClass);
 
 
 module.exports = router;
+

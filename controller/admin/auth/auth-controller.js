@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 
-const User = require("../../model/admin/auth-model");
+const User = require("../../../model/admin/auth/auth-model");
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;

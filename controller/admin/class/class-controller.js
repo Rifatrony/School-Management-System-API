@@ -1,4 +1,4 @@
-const Class = require("../../model/class/class_model");
+const Class = require("../../../model/admin/class/class_model");
 
 const AddNewClass = async (req, res)=>{
     try {

@@ -1,5 +1,5 @@
 const express = require("express");
-const { AddNewClass, fetchAllClass } = require("../../controller/admin/class-controller");
+const { AddNewClass, fetchAllClass } = require("../../../controller/admin/class/class-controller");
 
 const router = express.Router();
 

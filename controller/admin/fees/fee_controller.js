@@ -1,4 +1,4 @@
-const FeeCategory = require("../../model/fees/fee_model");
+const FeeCategory = require("../../../model/admin/fees/fee_model");
 const { v4: uuidv4 } = require("uuid");
 
 const AddFeesCaytegory = async (req, res)=>{

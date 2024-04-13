@@ -1,5 +1,6 @@
-const Student = require("../../model/student/student");
-const StudentFee = require("../../model/fees/fee_model");
+const Student = require("../../../model/admin/student/student");
+const StudentFee = require("../../../model/admin/fees/fee_model");
+const Class = require("../../../model/admin/class/class_model");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const { v4: uuidv4 } = require("uuid");
@@ -62,8 +63,8 @@ const StudentDetails = async (req, res) => {
     try {
         const studentId = req.params.student_id;
 
-        const student = await Student.findOne({ id: studentId }). select("id roll_no name class_id number f_name m_name");
-        // here id is the column name in student table & student_id is the name in the route
+        // Fetch student details
+        const student = await Student.findOne({ id: studentId }).select("id roll_no name class_id number f_name m_name");
 
         if (!student) {
             console.error("Student not found in database:", studentId);
@@ -72,16 +73,39 @@ const StudentDetails = async (req, res) => {
             });
         }
 
+        // Fetch class details using the class_id obtained from the student details
+        const classDetails = await Class.findOne({ id: student.class_id }).select("-createdAt -updatedAt -__v");
+
+
+        if (!classDetails) {
+            console.error("Class details not found for student:", studentId);
+            return res.status(404).json({
+                message: "Class details not found for student"
+            });
+        }
+
+        // Combine student and class details
+        const studentWithClassDetails = {
+            id: student.id,
+            roll_no: student.roll_no,
+            name: student.name,
+            number: student.number,
+            f_name: student.f_name,
+            m_name: student.m_name,
+            class: classDetails // Add class details to the student object
+        };
+
         res.status(200).json({
             message: "Student details retrieved successfully",
-            data: student
+            data: studentWithClassDetails
         });
     } catch (error) {
         res.status(500).json({
-            "message": error.message
-        })
+            message: error.message
+        });
     }
 }
+
 
 const EnrollIntoNewClass = async (req, res) => {
     try {
@@ -116,13 +140,60 @@ const EnrollIntoNewClass = async (req, res) => {
 
 const ViewStudent = async (req, res) => {
     try {
-        const currentEnrollYear = req.params.year; // Assuming you're passing the year in the URL parameter
+        // Pagination parameters
+        const fixedLimit = 3; // Fixed number of results per page
+        const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
 
-        // Find students whose current_enroll_year matches the parameter
-        const students = await Student.find({ current_enroll_year: currentEnrollYear });
+        // Calculate skip value based on page number and fixed limit
+        const skip = (page - 1) * fixedLimit;
 
+        // Query students
+        const students = await Student.find();
+
+        // Calculate total available data count
+        const totalStudents = students.length;
+
+        // Query students with pagination
+        const studentsOnPage = await Student.find()
+            .skip(skip)
+            .limit(fixedLimit);
+
+        // Map each student to include class details
+        const studentsWithClass = await Promise.all(studentsOnPage.map(async student => {
+            // Fetch class details for each student
+            const classDetails = await Class.findOne({ id: student.class_id }).select("-createdAt -updatedAt -__v");
+
+            // Return student details along with class details
+            return {
+                id: student.id,
+                name: student.name,
+                roll_no: student.roll_no,
+                birth_certificate_no: student.birth_certificate_no,
+                f_name: student.f_name,
+                m_name: student.m_name,
+                address: student.address,
+                number: student.number,
+                f_nid: student.f_nid,
+                current_enroll_year: student.current_enroll_year,
+                enroll_date: student.enroll_date,
+                // Include other student details as needed
+                class: classDetails // Include class details
+            };
+        }));
+
+        // Calculate total number of pages
+        const totalPages = Math.ceil(totalStudents / fixedLimit);
+
+        // Send response with students including class details, total available data count, and page number
         res.status(200).json({
-            students
+            success: true,
+            students: studentsWithClass,
+            pagination: {
+                total: totalStudents, // Total number of available data
+                totalPages: totalPages, // Total number of pages
+                current_page: page, // Current page number
+                // fixedLimit: fixedLimit // Fixed limit per page
+            }
         });
     } catch (error) {
         res.status(500).json({
@@ -130,6 +201,8 @@ const ViewStudent = async (req, res) => {
         });
     }
 };
+
+
 
 
 const months = [
