@@ -10,6 +10,11 @@ const classRouter = require("./routes/admin/class/admin-routes");
 const feesCategoryRouter = require("./routes/admin/fees/fees_route");
 const departmentRouter = require("./routes/admin/department/department_route");
 const noticetRouter = require("./routes/admin/notice/notice_route");
+const subjectRouter = require("./routes/admin/subject/subject_route");
+const sectionRouter = require("./routes/admin/section/section_route");
+const aboutRouter = require("./routes/admin/about/about_route");
+const costRouter = require("./routes/admin/cost/cost_route");
+const incomeRouter = require("./routes/admin/income/income_route");
 
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
@@ -23,6 +28,11 @@ app.use("/api/class",classRouter);
 app.use("/api/fees", feesCategoryRouter);
 app.use("/api/department", departmentRouter);
 app.use("/api/notice", noticetRouter);
+app.use("/api/subject", subjectRouter);
+app.use("/api/section", sectionRouter);
+app.use("/api/about", aboutRouter);
+app.use("/api/cost", costRouter);
+app.use("/api/income", incomeRouter);
 
 app.get("/", (req, res)=>{
     res.send("Successfully Running the server")

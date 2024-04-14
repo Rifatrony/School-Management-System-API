@@ -106,7 +106,6 @@ const StudentDetails = async (req, res) => {
     }
 }
 
-
 const EnrollIntoNewClass = async (req, res) => {
     try {
         // Find the student by ID
@@ -201,8 +200,6 @@ const ViewStudent = async (req, res) => {
         });
     }
 };
-
-
 
 
 const months = [
