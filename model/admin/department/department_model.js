@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const NewDepartment = mongoose.Schema({
     id: {
-        type: Number,
+        type: String,
         require: true,
         unique: true,
     },

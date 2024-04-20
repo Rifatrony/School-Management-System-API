@@ -33,9 +33,9 @@ const fetchAllSubject = async (req, res) => {
         const subjects = await Subject.find();
 
         const subjectsWithDetails = await Promise.all(subjects.map(async subject => {
-            const classDetails = await Class.findOne({ id: subject.class_id }).select("-createdAt -updatedAt -__v");
+            const classDetails = await Class.findOne({ id: subject.class_id }).select({ _id: 0, id: 1, name: 1 });
 
-            const departmentDetails = await Department.findOne({ id: subject.department_id }).select("-createdAt -updatedAt -__v");
+            const departmentDetails = await Department.findOne({ id: subject.department_id }).select({ _id: 0, id: 1, name: 1 });
 
             return {
                 id: subject.id,

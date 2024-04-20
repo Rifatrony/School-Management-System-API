@@ -18,7 +18,17 @@ const Student = mongoose.Schema({
     },
 
     class_id : {
-        type: Number,
+        type: String,
+        require: true,
+    },
+
+    section_id : {
+        type: String,
+        require: true,
+    },
+
+    department_id : {
+        type: String,
         require: true,
     },
 
@@ -26,6 +36,16 @@ const Student = mongoose.Schema({
         type: Number,
         require: true,
         unique: true,
+    },
+
+    age: {
+        type: Number,
+        require: true,
+    },
+
+    gender: {
+        type: String,
+        require: true,
     },
 
     f_name: {
@@ -55,10 +75,11 @@ const Student = mongoose.Schema({
 
     password: {
         type: String,
+        default: '12345678'
     },
 
     enroll_date: {
-        type: String,
+        type: Date,
         require: true,
     },
 

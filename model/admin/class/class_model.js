@@ -1,22 +1,23 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const NewClass = mongoose.Schema({
-    id: {
+const NewClassSchema = mongoose.Schema({
+    class_code: {
         type: Number,
-        require: true,
-        unique: true,
+        required: true,
+    },
+
+    id: {
+        type: String,
+        required: true,
     },
 
     name: {
         type: String,
-        require: true,
-        unique: true,
+        required: true,
     },
 },
 
-{ timestamps: {} }
-
+{ timestamps: true }
 );
 
-
-module.exports = mongoose.model('classes', NewClass);
+module.exports = mongoose.model('Class', NewClassSchema);

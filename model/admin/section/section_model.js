@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const NewSubject = mongoose.Schema({
+const NewSection = mongoose.Schema({
     id: {
         type: String,
         require: true,
@@ -17,10 +17,10 @@ const NewSubject = mongoose.Schema({
         require: true,
     },
 
-    department_id: {
-        type: String,
-        require: true,
-    },
+    // department_id: {
+    //     type: String,
+    //     require: true,
+    // },
 },
 
 { timestamps: {} }
@@ -28,4 +28,4 @@ const NewSubject = mongoose.Schema({
 );
 
 
-module.exports = mongoose.model('section', NewSubject);
+module.exports = mongoose.model('section', NewSection);

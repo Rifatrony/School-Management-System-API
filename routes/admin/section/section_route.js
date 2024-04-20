@@ -5,6 +5,6 @@ const { AddNewSection, fetchAllSection } = require("../../../controller/admin/se
 const router = express.Router();
 
 router.post('/add', checkLogin, AddNewSection);
-router.get('/view-all', checkLogin, fetchAllSection);
+router.get('/view-all/:class_id', checkLogin, fetchAllSection);
 
 module.exports = router;
