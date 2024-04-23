@@ -30,7 +30,7 @@ const fetchIncome = async (req, res) =>{
     try {
 
         const income = await Income.find()
-        .select({ _id: 0, id: 1, type: 1, amount: 1, note: 1 });
+        .select({ _id: 0, id: 1, type: 1, amount: 1, note: 1 }).sort({ createdAt: -1 });
 
         res.status(200).json({
             message: 'Success',

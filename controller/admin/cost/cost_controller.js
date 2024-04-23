@@ -29,7 +29,7 @@ const AddCost = async (req, res)=>{
 const fetchCost = async (req, res) =>{
     try {
 
-        const cost = await Cost.find().select({ _id: 0, id: 1, type: 1, amount: 1, note: 1 });
+        const cost = await Cost.find().select({ _id: 0, id: 1, type: 1, amount: 1, note: 1 }).sort({ createdAt: -1 });
 
         res.status(200).json({
             message: 'Success',

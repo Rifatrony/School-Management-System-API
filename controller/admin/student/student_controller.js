@@ -165,13 +165,13 @@ const ViewStudent = async (req, res) => {
         const skip = (page - 1) * fixedLimit;
 
         // Query students
-        const students = await Student.find();
+        const students = await Student.find({current_enroll_year: req.params.year});
 
         // Calculate total available data count
         const totalStudents = students.length;
 
         // Query students with pagination
-        const studentsOnPage = await Student.find()
+        const studentsOnPage = await Student.find({current_enroll_year: req.params.year})
             .skip(skip)
             .limit(fixedLimit);
 
