@@ -75,8 +75,6 @@ const AddStudent = async (req, res) => {
     }
 };
 
-
-
 const StudentDetails = async (req, res) => {
     try {
         const studentId = req.params.student_id;
@@ -232,8 +230,6 @@ const ViewStudent = async (req, res) => {
     }
 };
 
-
-
 const months = [
     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
 ];
@@ -288,7 +284,6 @@ const payStudentFee = async (req, res) => {
     }
 }
 
-
 const showEachStudentFee = async (req, res) =>{
     try {
 
@@ -306,6 +301,4 @@ const showEachStudentFee = async (req, res) =>{
     }
 }
 
-
-
-module.exports  = {AddStudent, StudentDetails, EnrollIntoNewClass, ViewStudent, payStudentFee, showEachStudentFee};
+module.exports  = {AddStudent, StudentDetails, EnrollIntoNewClass, ViewStudent, payStudentFee, showEachStudentFee, };
